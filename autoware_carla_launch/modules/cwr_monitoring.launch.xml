@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Carlaware Monitoring
+    =================
+    1) System
+        System Monitor
+    2) API
+        API for each module
+-->
+<launch>
+    <!-- Essential parameters -->
+    <arg name="map_path" default="$(env CWR_MAP_PATH)" description="point cloud and lanelet2 map directory path"/>
+    <arg name="vehicle_model" default="$(env CWR_VEHICLE_MODEL)" description="vehicle model name"/>
+    <arg name="sensor_model" default="$(env CWR_SENSOR_MODEL)" description="sensor model name"/>
+    <arg name="data_path" default="$(env CWR_DATA_PATH)" description="packages data and artifacts directory path" />
+    <arg name="pointcloud_container_name" default="pointcloud_container"/>
+    
+    <!-- Optional parameters -->
+    <!-- Modules to be launched -->
+    <arg name="launch_system" default="true" description="launch system"/>
+    <arg name="launch_api" default="true" description="launch api"/>
+    <!-- System -->
+    <arg name="system_run_mode" default="online" description="run mode in system"/>
+    <arg name="launch_system_monitor" default="false" description="launch system monitor"/>
+    <arg name="launch_dummy_diag_publisher" default="false" description="launch dummy diag publisher"/>
+    <arg name="system_error_monitor_param_path" default="$(find-pkg-share autoware_launch)/config/system/system_error_monitor/system_error_monitor.param.yaml"/>
+    <arg name="diagnostic_graph_aggregator_graph_path" default="$(find-pkg-share autoware_launch)/config/system/diagnostic_graph_aggregator/autoware-main.yaml" description="diagnostic graph config"/>
+    <!-- Auto mode setting-->
+    <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
+    <arg name="is_simulation" default="$(env CWR_SIMULATION)" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+
+    <!-- System -->
+    <group if="$(var launch_system)">
+        <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_system_component.launch.xml"/>
+    </group>
+
+    <!-- API -->
+    <group if="$(var launch_api)">
+        <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_autoware_api_component.launch.xml"/>
+    </group>
+</launch>
