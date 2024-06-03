@@ -2,8 +2,8 @@
 
 OP_ENVS=$1
 CWR_ENVS=$2
-OP_ENVS="${OP_EVNS:=${OP_BRIDGE_ROOT}/pha_scripts/export_exploration_envs.sh}"
-CWR_ENVS="${CWR_ENVS:=${OP_BRIDGE_ROOT}/pha_scripts/export_cwr_envs.sh}"
+OP_ENVS="${OP_ENVS:=${OP_BRIDGE_ROOT}/pha_scripts/export_exploration_envs.sh}"
+CWR_ENVS="${CWR_ENVS:=${OP_BRIDGE_ROOT}/pha_scripts/export_carlaware_envs.sh}"
 
 source ${OP_ENVS}
 source ${CWR_ENVS}
