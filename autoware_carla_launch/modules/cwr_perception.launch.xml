@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Carlaware Perception
+    =================
+    1) Perception
+-->
+<launch>
+    <!-- Essential parameters -->
+    <arg name="map_path" default="$(env CWR_MAP_PATH)" description="point cloud and lanelet2 map directory path"/>
+    <arg name="vehicle_model" default="$(env CWR_VEHICLE_MODEL)" description="vehicle model name"/>
+    <arg name="sensor_model" default="$(env CWR_SENSOR_MODEL)" description="sensor model name"/>
+    <arg name="data_path" default="$(env CWR_DATA_PATH)" description="packages data and artifacts directory path" />
+    <arg name="pointcloud_container_name" default="pointcloud_container"/>
+
+    <!-- Optional parameters -->
+    <!-- Modules to be launched -->
+    <arg name="launch_perception" default="true" description="launch perception"/>
+    <!-- Perception -->
+    <arg name="perception_mode" default="$(env CWR_PERCEPTION_MODE)" description="select perception mode. camera_lidar_radar_fusion, camera_lidar_fusion, lidar_radar_fusion, lidar, radar"/>
+    <arg name="traffic_light_recognition/enable_fine_detection" default="true" description="enable traffic light fine detection"/>
+    <arg name="traffic_light_namespace" default="traffic_light" description="traffic light recognition namespace1"/>
+    <!-- CenterPoint model parameters -->
+    <arg name="centerpoint_model_name" default="$(env CWR_CENTERPOINT_MODEL)" description="options: `centerpoint`, `centerpoint_tiny` or `centerpoint_sigma`"/>
+    <arg name="centerpoint_model_path" default="$(env CWR_CENTERPOINT_PATH)"/>
+    <!-- Auto mode setting-->
+    <arg name="enable_all_modules_auto_mode" default="false" description="enable all module's auto mode"/>
+    <arg name="is_simulation" default="$(env CWR_SIMULATION)" description="Autoware's behavior will change depending on whether this is a simulation or not."/>
+
+    <!-- Perception -->
+    <group if="$(var launch_perception)">
+        <include file="$(find-pkg-share autoware_launch)/launch/components/tier4_perception_component.launch.xml">
+            <arg name="data_path" value="$(var data_path)"/>
+        </include>
+    </group>
+</launch>
